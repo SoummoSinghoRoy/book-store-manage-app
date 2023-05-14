@@ -15,6 +15,15 @@ const UserDB = (sequelize, DataTypes) => {
         notNull: true
       }
     },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notNull: true,
+        isEmail: true
+      }
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,

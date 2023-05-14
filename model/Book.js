@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const BookDB = (sequelize, DataTypes) => {
   const Book = sequelize.define('Book', {
     id: {
