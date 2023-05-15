@@ -1,8 +1,18 @@
 const authRoute = require('./authRoute');
+const publisherRoute = require('./publisherRoute');
+const bookRoute = require('./bookRoute');
 
 const routes = [
   {
-    path: '/auth',
+    path: '/api/book',
+    handler: bookRoute
+  },
+  {
+    path: '/api/publisher',
+    handler: publisherRoute
+  },
+  {
+    path: '/api/auth',
     handler: authRoute
   },
   { 
