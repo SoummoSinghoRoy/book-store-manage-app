@@ -14,7 +14,7 @@ const BookDB = (sequelize, DataTypes) => {
     publish: {
       type: DataTypes.DATEONLY,
       get() {
-        return moment(this.getDataValue('dateOfBirth')).format('YYYY-MM-DD')
+        return moment(this.getDataValue('publish')).format('YYYY-MM-DD')
       },
       allowNull: false
     },
