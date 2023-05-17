@@ -27,7 +27,6 @@ db.book = require('./Book')(sequelize, DataTypes);
 db.publisher.hasMany(db.book, {
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE',
-  foreignKey: 'publisherId'
 })
 db.book.belongsTo(db.publisher, {
   onDelete: 'CASCADE',

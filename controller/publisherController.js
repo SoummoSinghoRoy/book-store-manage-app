@@ -10,7 +10,7 @@ exports.publisherAllGetController = async (req, res) => {
     if (publishers.length !== 0) {
       res.status(200).json(publishers)
     } else {
-      resourceError(res, "Publishers empty")
+      resourceError(res, "Publishers not found")
     }
   } catch (error) {
     serverError(res, error)
@@ -52,14 +52,14 @@ exports.publisherEditPutController = async (req, res) => {
   try {
     const current_publisher = await Publisher.findOne({ where: { id: publisherid } })
     if (current_publisher) {
-      const updatedid = await Publisher.update({ name }, { where: { id: current_publisher.id } })
-      const updated_publisher = await Publisher.findOne({ where: { id: updatedid } })
+      await Publisher.update({ name }, { where: { id: current_publisher.id } })
+      const updated_publisher = await Publisher.findOne({ where: { id: publisherid } })
       res.status(200).json({
         Message: "Publisher updated successfully",
         updated_publisher
       })
     } else {
-      resourceError(res, 'Publisher not found')
+      resourceError(res, "Publisher not found")
     }
   } catch (error) {
     serverError(res, error)
@@ -75,10 +75,10 @@ exports.publisherDeleteController = async (req, res) => {
       await Publisher.destroy({ where: { id: publisher.id } })
       res.status(200).json({
         Message: "Publisher deleted successfully",
-        deleteddata: publisher
+        deleted_publisher: publisher
       })
     } else {
-      resourceError(res, 'Publisher not found')
+      resourceError(res, "Publisher not found")
     }
   } catch (error) {
     serverError(res, error)
