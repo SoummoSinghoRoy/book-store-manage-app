@@ -5,6 +5,7 @@ const User = db.user;
 
 module.exports = [
   body('username')
+      .not().isEmpty().withMessage(`Username can't be empty`)
       .trim()
       .custom(async username => {
         const user = await User.findOne({ where: { username } })
