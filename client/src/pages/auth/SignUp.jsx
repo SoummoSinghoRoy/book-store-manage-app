@@ -1,5 +1,6 @@
 import React, { Component} from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import withNavigate from '../../hook/withNavigate';
 import { signupUserAction } from '../../store/action/authAction';
@@ -22,7 +23,7 @@ class SignUp extends Component {
   submitHandler = (event) => {
     event.preventDefault()
     const { username, email, password, confirmPassword } = this.state;
-    this.props.signupUserAction({ username, email, password, confirmPassword })
+    this.props.signupUserAction({ username, email, password, confirmPassword }, this.props.navigation)
   }
 
   render() {
@@ -33,7 +34,7 @@ class SignUp extends Component {
           <div className="col-12 col-md-6 col-lg-6">
             <div className="card px-3 py-3">
               <h5 className="text-center">Signup here</h5>
-              <p className="text-center">Have an account? </p>
+              <p className="text-center">Have an account? <Link to="/login" className="card-link">Log in here</Link></p>
               <div className="card-body">
                 <form method="post" onSubmit={this.submitHandler}>
                   <div className="mb-3">
@@ -118,4 +119,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {signupUserAction})(SignUp);
+export default connect(mapStateToProps, {signupUserAction})(withNavigate(SignUp));
