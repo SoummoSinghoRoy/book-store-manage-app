@@ -54,6 +54,7 @@ exports.loginPostController = async (req, res) => {
           return resourceError(res, "Incorrect password")
         }
         const token = jwt.sign({
+          id: user.id,
           username: user.username,
           email: user.email
         }, config.get('secret'), { expiresIn: "10h" })
