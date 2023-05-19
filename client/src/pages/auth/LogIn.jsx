@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import withNavigate from '../../hook/withNavigate';
-import { loginUserAction } from '../../store/action/authAction';
+import { loginUserAction, clearAuthStateAction } from '../../store/action/authAction';
+import AlertComponent from '../../components/Alert';
 
 class LogIn extends Component {
   state= {
     email: '', 
-    password: '', 
-    messageAlert: true
+    password: '',
+    showMessage: true 
   }
-
   changeHandler = (event) => {
     this.setState({
       [event.target.name]: event.target.value
@@ -30,9 +30,13 @@ class LogIn extends Component {
         <div className="row my-3">
           <div className="col-12 col-md-4 col-lg-4"></div>
           <div className="col-12 col-md-4 col-lg-4">
+            { this.props.message ? 
+              <AlertComponent message = { this.props.message } action = {this.props.clearAuthStateAction} />
+              : null 
+            }
             <div className="card px-3 py-3">
               <h5 className="text-center">Login here</h5>
-              <p className="text-center">Don't have an account? <Link to="/signup" className="card-link">Sign up now</Link> </p>
+              <p className="text-center">Don't have an account? <Link to="/signup" className="card-link">Signup now</Link> </p>
               <div className="card-body">
                 <form method="post" onSubmit={this.submitHandler}>
 
@@ -81,8 +85,9 @@ class LogIn extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    errors: state.auth.error
+    errors: state.auth.error,
+    message: state.auth.message
   }
 }
 
-export default connect(mapStateToProps, {loginUserAction})(withNavigate(LogIn));
+export default connect(mapStateToProps, {loginUserAction, clearAuthStateAction})(withNavigate(LogIn));

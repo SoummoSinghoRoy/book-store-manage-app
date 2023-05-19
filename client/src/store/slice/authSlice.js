@@ -5,21 +5,29 @@ const authSlice = createSlice({
   initialState: {
     user: {},
     error: {},
-    isAuhtneticated: false
+    message: '',
+    isAuhenticated: false
   },
   reducers: {
     signup_user: (state, action) => {
-      state.user = action.payload.registered_user ? action.payload.registered_user : {};
-      state.error = !action.payload.errors ?  {} : action.payload.errors;
-      state.isAuhtneticated = false;
+      state.user = action.payload.loggedIn || {};
+      state.error = action.payload.errors ||  {};
+      state.isAuhenticated = false;
     },
     login_user: (state, action) => {
-      state.user = action.payload.loggedIn ? action.payload.loggedIn : {};
-      state.error = !action.payload.errors ?  {} : action.payload.errors;
-      state.isAuhtneticated = action.payload.loggedIn ? true : false;
+      state.user = action.payload.loggedIn || {};
+      state.error = action.payload.errors ||  {};
+      state.message = action.payload.Message || '';
+      state.isAuhenticated = action.payload.loggedIn ? true : false;
+    },
+    clear_authstate: (state) => {
+      state.user = {};
+      state.error = {};
+      state.message = '';
+      state.isAuhenticated = false
     }
   }
 })
 
-export const { signup_user, login_user } = authSlice.actions
+export const { signup_user, login_user, clear_authstate } = authSlice.actions
 export default authSlice.reducer;

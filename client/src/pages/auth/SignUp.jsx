@@ -11,7 +11,6 @@ class SignUp extends Component {
     email: '', 
     password: '', 
     confirmPassword: '',
-    messageAlert: true
   }
 
   changeHandler = (event) => {
@@ -34,7 +33,7 @@ class SignUp extends Component {
           <div className="col-12 col-md-6 col-lg-6">
             <div className="card px-3 py-3">
               <h5 className="text-center">Signup here</h5>
-              <p className="text-center">Have an account? <Link to="/login" className="card-link">Log in here</Link></p>
+              <p className="text-center">Have an account? <Link to="/login" className="card-link">Login here</Link></p>
               <div className="card-body">
                 <form method="post" onSubmit={this.submitHandler}>
                   <div className="mb-3">
@@ -115,7 +114,7 @@ class SignUp extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    errors: state.auth.error
+    errors: state.auth.error,
   }
 }
 
