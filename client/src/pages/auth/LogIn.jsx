@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import withNavigate from '../../hook/withNavigate';
@@ -31,7 +31,7 @@ class LogIn extends Component {
           <div className="col-12 col-md-4 col-lg-4"></div>
           <div className="col-12 col-md-4 col-lg-4">
             { this.props.message ? 
-              <AlertComponent message = { this.props.message } action = {this.props.clearAuthStateAction} />
+              <AlertComponent message = { this.props.message } action = {this.props.clearAuthStateAction} alertStyle="alert alert-warning alert-dismissible fade show"/>
               : null 
             }
             <div className="card px-3 py-3">

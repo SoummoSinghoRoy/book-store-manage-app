@@ -5,26 +5,26 @@ const authSlice = createSlice({
   initialState: {
     user: {},
     error: {},
-    message: '',
-    isAuhenticated: false
+    isAuthenticated: false,
+    message: ''
   },
   reducers: {
     signup_user: (state, action) => {
       state.user = action.payload.loggedIn || {};
       state.error = action.payload.errors ||  {};
-      state.isAuhenticated = false;
+      state.isAuthenticated = false;
     },
     login_user: (state, action) => {
       state.user = action.payload.loggedIn || {};
       state.error = action.payload.errors ||  {};
+      state.isAuthenticated = action.payload.loggedIn ? true : false;
       state.message = action.payload.Message || '';
-      state.isAuhenticated = action.payload.loggedIn ? true : false;
     },
     clear_authstate: (state) => {
       state.user = {};
       state.error = {};
+      state.isAuthenticated = false
       state.message = '';
-      state.isAuhenticated = false
     }
   }
 })

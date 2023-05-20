@@ -21,7 +21,7 @@ export const loginUserAction = (user, redirect) => dispatch => {
     sendAuthToken(token)
     const decode = jwtDeCode(token)
     dispatch(login_user({loggedIn: decode}))
-    redirect('/signup')
+    redirect('/publisher')
   }).catch(err => {
     console.log(err.response.data);
     dispatch(login_user(err.response.data))

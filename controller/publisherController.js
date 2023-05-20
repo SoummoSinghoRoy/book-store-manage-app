@@ -18,7 +18,8 @@ exports.publisherAllGetController = async (req, res) => {
 }
 
 exports.publisherAddPostController = async (req, res) => {
-  const { name } = req.body;
+  const { publishername } = req.body;
+  console.log(publishername);
   const errors = validationResult(req).formatWith(err => err.msg)
 
   if (!errors.isEmpty()) {
@@ -28,7 +29,7 @@ exports.publisherAddPostController = async (req, res) => {
   }
   
   try {
-    const registered_publisher = await Publisher.create({ name })
+    const registered_publisher = await Publisher.create({ name: publishername })
     res.status(200).json({
       Message: "Publisher created successfully",
       registered_publisher
@@ -39,7 +40,7 @@ exports.publisherAddPostController = async (req, res) => {
 }
 
 exports.publisherEditPutController = async (req, res) => {
-  const { name } = req.body;
+  const { publishername } = req.body;
   const { publisherid } = req.params;
   const errors = validationResult(req).formatWith(err => err.msg)
 
@@ -52,7 +53,7 @@ exports.publisherEditPutController = async (req, res) => {
   try {
     const current_publisher = await Publisher.findOne({ where: { id: publisherid } })
     if (current_publisher) {
-      await Publisher.update({ name }, { where: { id: current_publisher.id } })
+      await Publisher.update({ name: publishername }, { where: { id: current_publisher.id } })
       const updated_publisher = await Publisher.findOne({ where: { id: publisherid } })
       res.status(200).json({
         Message: "Publisher updated successfully",

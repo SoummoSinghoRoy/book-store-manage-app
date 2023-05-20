@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import SignUp from '../pages/auth/SignUp';
 import LogIn from '../pages/auth/LogIn';
+import Publisher from '../pages/publisher/Publisher';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Routes>
           <Route path='/signup' element={<SignUp/>}/>
           <Route path='/login' element={<LogIn/>}/>
+          <Route path='/publisher' element={<Publisher/>}/>
         </Routes>
       </BrowserRouter>
     </div>
