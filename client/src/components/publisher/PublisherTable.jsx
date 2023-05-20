@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchAllPublishersAction, publisherDeleteAction } from '../../store/action/publisherAction';
 import DeleteComponent from '../DeleteButton';
+import EditComponent from '../EditButton';
 
 const PublisherTable = () => {
   const dispatch = useDispatch()
@@ -30,7 +31,8 @@ const PublisherTable = () => {
                 <td> { ind + 1 } </td>
                 <td> {publisher.name} </td>
                 <td>
-                  <DeleteComponent action = {publisherDeleteAction(publisher.id)} />
+                  <EditComponent/>
+                  <DeleteComponent action = {publisherDeleteAction(publisher.id)}/>
                 </td>
               </tr>
             )

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addPublisherAction, clearPublisherStateAction } from '../../store/action/publisherAction';
-import AlertComponent from '../Alert';
+import { addPublisherAction } from '../../store/action/publisherAction';
 
 class PublisherForm extends Component {
   state={
@@ -27,10 +26,6 @@ class PublisherForm extends Component {
   render() {
     return(
       <>
-      { this.props.message ? 
-          <AlertComponent message = { this.props.message } action = {this.props.clearPublisherStateAction} alertStyle="alert alert-success alert-dismissible fade show"/>
-          : null 
-      }
         <form onSubmit={this.submitHandler} className="my-3">       
           <div className="input-group">
             <span className="input-group-text fw-semibold">Publisher name</span>
@@ -62,4 +57,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { addPublisherAction, clearPublisherStateAction })(PublisherForm);
+export default connect(mapStateToProps, { addPublisherAction })(PublisherForm);
