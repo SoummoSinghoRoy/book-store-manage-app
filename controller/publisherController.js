@@ -19,7 +19,6 @@ exports.publisherAllGetController = async (req, res) => {
 
 exports.publisherAddPostController = async (req, res) => {
   const { publishername } = req.body;
-  console.log(publishername);
   const errors = validationResult(req).formatWith(err => err.msg)
 
   if (!errors.isEmpty()) {

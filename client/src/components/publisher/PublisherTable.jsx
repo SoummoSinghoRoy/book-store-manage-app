@@ -11,7 +11,7 @@ const PublisherTable = () => {
 
   useEffect(() => {
     dispatch(fetchAllPublishersAction())
-  },[dispatch])
+  },[])
 
   return (
     <table className='table'>
@@ -31,7 +31,7 @@ const PublisherTable = () => {
                 <td> { ind + 1 } </td>
                 <td> {publisher.name} </td>
                 <td>
-                  <EditComponent/>
+                  <EditComponent itemId = {publisher.id}/>
                   <DeleteComponent action = {publisherDeleteAction(publisher.id)}/>
                 </td>
               </tr>

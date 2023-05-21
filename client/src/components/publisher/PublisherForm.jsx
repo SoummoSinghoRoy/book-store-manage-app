@@ -33,14 +33,14 @@ class PublisherForm extends Component {
               type="text" 
               id="publishername" 
               name="publishername" 
-              className={this.props.error.publishername ? "form-control is-invalid" : "form-control"}
+              className={this.props.addError.publishername ? "form-control is-invalid" : "form-control"}
               value={ this.state.publishername } 
               onChange={this.changeHandler}
             />
             <button type="submit" className="btn btn-primary ms-2">Add publisher</button>
-            { this.props.error.publishername &&
+            { this.props.addError.publishername &&
               <div className="invalid-feedback">
-                { this.props.error.publishername }
+                { this.props.addError.publishername }
               </div>
             }
           </div>
@@ -52,7 +52,7 @@ class PublisherForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    error: state.publisher.error,
+    addError: state.publisher.addError,
     message: state.publisher.message,
   }
 }
