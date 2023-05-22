@@ -50,7 +50,8 @@ const publisherSlice = createSlice({
     },
     clear_publisherState: (state) => {
       state.publishers = [...state.publishers];
-      state.error = {};
+      state.addError = {};
+      state.editError = {};
       state.message = '';
     }
   }

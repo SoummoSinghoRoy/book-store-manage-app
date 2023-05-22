@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import PublisherEditModal from './publisher/PublisherEditModal';
 
 const EditComponent = (props) => {
-  const dispatch = useDispatch()
   const [modalShow, setModalShow] = useState(false)
   const publishers = useSelector((state) => state.publisher.publishers)
 

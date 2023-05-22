@@ -29,9 +29,13 @@ exports.bookAddPostController = async (req, res) => {
     })
   }
   try {
-    const book_publisher = await Publisher.findOne({ where: { id: parseInt(publisher) } })
+    const publisherid = parseInt(publisher)
+    const bookPublisher = await Publisher.findOne({ where: { id: publisherid } })
     // use eager loading method
-    const book = await Book.create({ name, publish, baseprice, publisherId: book_publisher.id }, { include: [Publisher] })
+    const book = await Book.create(
+      { name, publish, baseprice, PublisherId: bookPublisher.id }, 
+      { include: [Publisher] }
+    )
 
     res.status(200).json({
       Message: "Book added successfully",
