@@ -10,7 +10,9 @@ class BookForm extends Component {
     name: '', 
     publish: '', 
     baseprice: '',
-    publisher: ''
+    publisher: '',
+    searchWord: '',
+    accordionIndex: null
   }
 
   componentDidMount = () => {
@@ -23,8 +25,29 @@ class BookForm extends Component {
     })
   }
 
+  handleAccordionClick = (index) => {
+    if (index === this.state.accordionIndex) {
+      this.setState({
+        accordionIndex: null
+      })
+    } else {
+      this.setState({
+        accordionIndex: index
+      })
+    }
+  }
+
+  isAccordionActive = (index) => {
+    return index === this.state.accordionIndex ? 'show' : '';
+  }
+
+  searchInputHandler = (event) => {
+    this.setState({
+      searchWord: event.target.value
+    })
+  }
+
   selectHandler = (event) => {
-    console.log(typeof(event.target.value));
     this.setState({
       publisher: event.target.value
     })
@@ -39,12 +62,21 @@ class BookForm extends Component {
         name: '', 
         publish: '', 
         baseprice: '',
-        publisher: ''
+        publisher: '',
+        searchWord: '',
+        accordionIndex: null
       })
     }
   }
 
   render() {
+    let filteredPublisher;
+
+    if (this.state.searchWord) {
+      filteredPublisher = this.props.publishers.filter((publisher) =>
+        publisher.name.toLowerCase().includes(this.state.searchWord.toLowerCase())
+      );
+    }
     return (
       <>
         {
@@ -107,13 +139,77 @@ class BookForm extends Component {
               null
             }
           </div>
-          <div className="mb-3">
+          <div className="accordion mb-3" id="accordionExample">
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headingOne">
+                <button
+                  className={`accordion-button publisher-accordion-btn ${this.isAccordionActive(0)}`}
+                  type="button"
+                  onClick={() => this.handleAccordionClick(0)}
+                >
+                  Enter publisher name
+                </button>
+              </h2>
+              <div
+                id="collapseOne"
+                className={`accordion-collapse collapse ${this.isAccordionActive(0)}`}
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div className="accordion-body">
+                  <input 
+                    type="text" 
+                    value={this.state.searchWord}
+                    onChange={this.searchInputHandler}
+                    className='form-control'
+                  />
+                  <div className="list-group my-2">
+                    { this.state.searchWord ? 
+                      filteredPublisher.map((publisher) => {
+                        return(
+                          <button
+                            key={publisher.id} 
+                            type="button" 
+                            className="list-group-item list-group-item-action" 
+                            onClick={this.selectHandler} 
+                            value={publisher.id}
+                          > 
+                            {publisher.name} 
+                          </button>
+                        )
+                      }) :
+                      this.props.publishers.map((publisher) => {
+                        return(
+                          <button
+                            key={publisher.id} 
+                            type="button" 
+                            className="list-group-item list-group-item-action" 
+                            onClick={this.selectHandler} 
+                            value={publisher.id}
+                          > 
+                            {publisher.name} 
+                          </button>
+                        )
+                      })
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {
+            this.props.addError.publisher || this.props.editError.publisher ? 
+            <div className="invalid-feedback">
+              { this.props.addError.publisher || this.props.editError.publisher }
+            </div> :
+            null
+          }
+          {/* <div className="mb-3">
             <label htmlFor="publisher" className='mb-1'>Select publisher</label>
             <select className={this.props.addError.publisher || this.props.editError.publisher ? "form-select is-invalid" : "form-select"}  value={this.state.publisher} onChange={this.selectHandler}>
               <option value= ""> Select a publisher.... </option>
               {
                 this.props.publishers.map((publisher) => {
-                  
                   return <option key={publisher.id} value={publisher.id}> { publisher.name } </option>
                 })
               }
@@ -125,7 +221,7 @@ class BookForm extends Component {
               </div> :
               null
             }
-          </div>
+          </div> */}
           <button type="submit" className="btn btn-primary ms-2">{this.props.isCreateMode ? "Add book" : "Edit book" }</button>
         </form>
       </>
