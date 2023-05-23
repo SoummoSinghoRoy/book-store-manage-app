@@ -12,6 +12,7 @@ class BookForm extends Component {
     baseprice: '',
     publisher: '',
     searchWord: '',
+    publishername: '',
     accordionIndex: null
   }
 
@@ -48,9 +49,15 @@ class BookForm extends Component {
   }
 
   selectHandler = (event) => {
+    const selectedPublisherId = event.target.value;
+    const selectedPublisher = this.props.publishers.find(publisher => publisher.id === parseInt(selectedPublisherId))
+    const selectedPublisherName = selectedPublisher ? selectedPublisher.name : '';
+
     this.setState({
-      publisher: event.target.value
-    })
+      publisher: selectedPublisherId,
+      publishername: selectedPublisherName,
+      accordionIndex: null
+    });
   }
 
   submitHandler = (event) => {
@@ -147,7 +154,7 @@ class BookForm extends Component {
                   type="button"
                   onClick={() => this.handleAccordionClick(0)}
                 >
-                  Enter publisher name
+                  { this.state.publishername !== '' ? this.state.publishername : "Enter a publisher" }
                 </button>
               </h2>
               <div
@@ -163,35 +170,37 @@ class BookForm extends Component {
                     onChange={this.searchInputHandler}
                     className='form-control'
                   />
-                  <div className="list-group my-2">
-                    { this.state.searchWord ? 
-                      filteredPublisher.map((publisher) => {
-                        return(
-                          <button
-                            key={publisher.id} 
-                            type="button" 
-                            className="list-group-item list-group-item-action" 
-                            onClick={this.selectHandler} 
-                            value={publisher.id}
-                          > 
-                            {publisher.name} 
-                          </button>
-                        )
-                      }) :
-                      this.props.publishers.map((publisher) => {
-                        return(
-                          <button
-                            key={publisher.id} 
-                            type="button" 
-                            className="list-group-item list-group-item-action" 
-                            onClick={this.selectHandler} 
-                            value={publisher.id}
-                          > 
-                            {publisher.name} 
-                          </button>
-                        )
-                      })
-                    }
+                  <div className='overflow-auto' style={{height: "200px"}}>
+                    <div className="list-group my-2">
+                      { this.state.searchWord ? 
+                        filteredPublisher.map((publisher) => {
+                          return(
+                            <button
+                              key={publisher.id} 
+                              type="button" 
+                              className="list-group-item list-group-item-action" 
+                              onClick={this.selectHandler} 
+                              value={publisher.id}
+                            > 
+                              {publisher.name} 
+                            </button>
+                          )
+                        }) :
+                        this.props.publishers.map((publisher) => {
+                          return(
+                            <button
+                              key={publisher.id} 
+                              type="button" 
+                              className="list-group-item list-group-item-action" 
+                              onClick={this.selectHandler} 
+                              value={publisher.id}
+                            > 
+                              {publisher.name} 
+                            </button>
+                          )
+                        })
+                      }
+                    </div>
                   </div>
                 </div>
               </div>

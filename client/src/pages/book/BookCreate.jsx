@@ -9,7 +9,7 @@ const BookCreate = () => {
           <div className="col-12 col-md-3 col-lg-3"></div>
           <div className="col-12 col-md-6 col-lg-6">
             <div className="card px-3 py-3">
-              <h5 className="text-center">Create a book</h5>
+              <h4 className="text-center">Create a book</h4>
               <div className="card-body">
                 <BookForm isCreateMode = {true}/>
               </div>

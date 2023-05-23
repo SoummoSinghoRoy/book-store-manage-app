@@ -38,7 +38,7 @@ const PublisherTable = () => {
             )
           }) : 
             <tr>
-              <td colSpan={3}>Publishers not found</td>    
+              <td colSpan={3}><h5 className='text-center'>Publisher not found</h5></td>    
             </tr>
         }
       </tbody>

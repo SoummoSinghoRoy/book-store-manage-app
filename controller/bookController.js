@@ -8,7 +8,6 @@ const Publisher = db.publisher;
 exports.bookAllGetController = async (req, res) => {
   try {
     const books = await Book.findAll({ include: Publisher })
-    console.log(books);
     if(books.length !== 0) {
       res.status(200).json(books)
     } else {

@@ -10,49 +10,57 @@ const publisherSlice = createSlice({
   },
   reducers: {
     fetchAll_publishers: (state, action) => {
-      state.publishers = action.payload.publishers;
-      state.addError = {};
-      state.editError = {};
-      state.message = '';
+      return {
+        ...state,
+        publishers: action.payload.publishers,
+      }
     },
     add_publisher: (state, action) => {
       if(action.payload.registered_publisher) {
-        state.publishers.push(action.payload.registered_publisher);
-        state.addError = {};
-        state.editError = {};
-        state.message = action.payload.Message || '';
+        return {
+          ...state,
+          publishers: [...state.publishers, action.payload.registered_publisher],
+          message: action.payload.Message
+        }
       } else {
-        state.publishers = [...state.publishers];
-        state.addError = action.payload.errors || {};
-        state.editError = {};
-        state.message = '';
+        return {
+          ...state,
+          publishers: [...state.publishers],
+          addError: action.payload.errors
+        }
       }
     },
     delete_publisher: (state, action) => {
-      state.publishers = [...state.publishers].filter(publisher => publisher.id !== action.payload.deleted_publisher.id);
-      state.addError = {};
-      state.editError = {};
-      state.message = action.payload.Message || ''
+     return {
+      ...state,
+      publishers: [...state.publishers].filter(publisher => publisher.id !== action.payload.deleted_publisher.id),
+      message: action.payload.Message || ''
+     }
     },
     edit_publisher: (state, action) => {
-      if(action.payload.updated_publisher) {
-        const publisherIndex= [...state.publishers].findIndex((publisher) => publisher.id === action.payload.updated_publisher.id);
-        state.publishers[publisherIndex] = action.payload.updated_publisher;
-        state.addError = {};
-        state.editError = {};
-        state.message = action.payload.Message;
+      if (action.payload.updated_publisher) {
+        const publisherIndex = state.publishers.findIndex(publisher => publisher.id === action.payload.updated_publisher.id);
+        const updatedPublishers = [...state.publishers];
+        updatedPublishers[publisherIndex] = action.payload.updated_publisher;
+    
+        return {
+          ...state,
+          publishers: updatedPublishers,
+          message: action.payload.Message
+        };
       } else {
-        state.publishers = [...state.publishers];
-        state.addError = {};
-        state.editError = action.payload.errors || {};
-        state.message = '';
+        return {
+          ...state,
+          publishers: [...state.publishers],
+          editError: action.payload.errors || {}
+        };
       }
     },
     clear_publisherState: (state) => {
-      state.publishers = [...state.publishers];
-      state.addError = {};
-      state.editError = {};
-      state.message = '';
+      return {
+        ...state,
+        message: ''
+      }
     }
   }
 })

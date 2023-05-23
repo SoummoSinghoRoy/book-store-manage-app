@@ -9,27 +9,45 @@ const bookSlice = createSlice({
     message: ''
   },
   reducers: {
+    fetch_AllBooks: (state, action) => {
+      return {
+        ...state,
+        books: action.payload.books,
+        addError: {},
+        editError: {},
+        message:''
+      }
+    },
     add_book: (state, action) => {
       if(action.payload.book) {
-        state.books.push(action.payload.book);
-        state.addError = {};
-        state.editError = {};
-        state.message = action.payload.Message || ''
+        return {
+          ...state,
+          books: [...state.books, action.payload.book],
+          addError: {},
+          editError: {},
+          message: action.payload.Message || ''
+        };
       }else {
-        state.publishers = [...state.books];
-        state.addError = action.payload.errors || {};
-        state.editError = {};
-        state.message = '';
+        return {
+          ...state,
+          publishers: [...state.books],
+          addError: action.payload.errors || {},
+          editError: {},
+          message: ''
+        };
       }
     },
     clear_bookState: (state) => {
-      state.publishers = [...state.books];
-      state.addError = {};
-      state.editError = {};
-      state.message = '';
+      return {
+        ...state,
+        publishers: [...state.books],
+        addError: {},
+        editError: {},
+        message: ''
+      };
     }
   }
 })
 
-export const { add_book, clear_bookState } = bookSlice.actions;
+export const { add_book, fetch_AllBooks, clear_bookState } = bookSlice.actions;
 export default bookSlice.reducer;
