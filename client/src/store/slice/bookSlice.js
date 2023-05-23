@@ -37,6 +37,13 @@ const bookSlice = createSlice({
         };
       }
     },
+    delete_book: (state, action) => {
+      return {
+        ...state,
+        books: action.payload.deleted_book.id ? [...state.books].filter((book) => book.id !== action.payload.deleted_book.id) : [...state.books],
+        message: action.payload.Message || action.payload.Message
+      }
+    },
     clear_bookState: (state) => {
       return {
         ...state,
@@ -49,5 +56,5 @@ const bookSlice = createSlice({
   }
 })
 
-export const { add_book, fetch_AllBooks, clear_bookState } = bookSlice.actions;
+export const { add_book, fetch_AllBooks, delete_book, clear_bookState } = bookSlice.actions;
 export default bookSlice.reducer;

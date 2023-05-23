@@ -1,3 +1,7 @@
 .publisher-accordion-btn:not(.collapsed) {
   background-color: white;
 }
+.list-group-item-action:hover {
+  background-color: #0d6efd;
+  color: white;
+}

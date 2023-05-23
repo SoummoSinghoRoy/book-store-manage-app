@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchAllBooksAction } from '../../store/action/bookAction';
+import { fetchAllBooksAction, bookDeleteAction } from '../../store/action/bookAction';
+import DeleteComponent from '../DeleteButton';
 
 const BookTable = () => {
   const [searchWord, setSearchWord] = useState('')
@@ -61,6 +62,9 @@ const BookTable = () => {
                     <td> { book.Publisher.name } </td>
                     <td> { book.baseprice } </td>
                     <td> { book.publish } </td>
+                    <td>
+                      <DeleteComponent action={bookDeleteAction(book.id)} />
+                    </td>
                   </tr>
                 )
               }) :

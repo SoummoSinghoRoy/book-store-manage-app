@@ -33,8 +33,8 @@ const publisherSlice = createSlice({
     delete_publisher: (state, action) => {
      return {
       ...state,
-      publishers: [...state.publishers].filter(publisher => publisher.id !== action.payload.deleted_publisher.id),
-      message: action.payload.Message || ''
+      publishers: action.payload.deleted_publisher.id ? [...state.publishers].filter(publisher => publisher.id !== action.payload.deleted_publisher.id) : [...state.publishers],
+      message: action.payload.Message || action.payload.message
      }
     },
     edit_publisher: (state, action) => {

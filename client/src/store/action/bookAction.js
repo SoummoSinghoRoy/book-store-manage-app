@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { add_book, fetch_AllBooks, clear_bookState } from '../slice/bookSlice';
+import { add_book, fetch_AllBooks, delete_book, clear_bookState } from '../slice/bookSlice';
 
 export const fetchAllBooksAction = () => dispatch => {
   axios.get('http://localhost:9920/api/book').then((res) => {
@@ -16,6 +16,15 @@ export const bookCreateAction = (book) => dispatch => {
   }).catch((err) => {
     console.log(err.response.data);
     dispatch(add_book(err.response.data))
+  })
+}
+
+export const bookDeleteAction = (bookid) => dispatch => {
+  axios.delete(`http://localhost:9920/api/book/delete/${bookid}`).then((res) => {
+    dispatch(delete_book(res.data))
+  }).catch((err) => {
+    console.log(err);
+    dispatch(delete_book({ message: "Error occured! book can't delete" }))
   })
 }
 

@@ -205,32 +205,16 @@ class BookForm extends Component {
                 </div>
               </div>
             </div>
-          </div>
-          {
-            this.props.addError.publisher || this.props.editError.publisher ? 
-            <div className="invalid-feedback">
-              { this.props.addError.publisher || this.props.editError.publisher }
-            </div> :
-            null
-          }
-          {/* <div className="mb-3">
-            <label htmlFor="publisher" className='mb-1'>Select publisher</label>
-            <select className={this.props.addError.publisher || this.props.editError.publisher ? "form-select is-invalid" : "form-select"}  value={this.state.publisher} onChange={this.selectHandler}>
-              <option value= ""> Select a publisher.... </option>
+            <div className='feedback'>
               {
-                this.props.publishers.map((publisher) => {
-                  return <option key={publisher.id} value={publisher.id}> { publisher.name } </option>
-                })
+                this.props.addError.publisher || this.props.editError.publisher ? 
+                <div className="invalid-feedback d-block">
+                  { this.props.addError.publisher || this.props.editError.publisher }
+                </div> :
+                null
               }
-            </select>
-            {
-              this.props.addError.publisher || this.props.editError.publisher ? 
-              <div className="invalid-feedback">
-                { this.props.addError.publisher || this.props.editError.publisher }
-              </div> :
-              null
-            }
-          </div> */}
+            </div>
+          </div>
           <button type="submit" className="btn btn-primary ms-2">{this.props.isCreateMode ? "Add book" : "Edit book" }</button>
         </form>
       </>
