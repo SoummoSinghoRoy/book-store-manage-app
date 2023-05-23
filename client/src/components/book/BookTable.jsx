@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchAllBooksAction, bookDeleteAction } from '../../store/action/bookAction';
 import DeleteComponent from '../DeleteButton';
+import EditComponent from '../EditButton';
 
 const BookTable = () => {
   const [searchWord, setSearchWord] = useState('')
@@ -56,13 +57,14 @@ const BookTable = () => {
             filteredBook.length !== 0 ?
               filteredBook.map((book, ind) => {
                 return (
-                  <tr key={book.id} className='text-center'>
-                    <td> {ind + 1} </td>
-                    <td> { book.name } </td>
-                    <td> { book.Publisher.name } </td>
-                    <td> { book.baseprice } </td>
-                    <td> { book.publish } </td>
+                  <tr key={book.id}>
+                    <td className='text-center'> {ind + 1} </td>
+                    <td className='text-center'> { book.name } </td>
+                    <td className='text-center'> { book.Publisher.name } </td>
+                    <td className='text-center'> { book.baseprice } </td>
+                    <td className='text-center'> { book.publish } </td>
                     <td>
+                      <EditComponent bookId = {book.id} />
                       <DeleteComponent action={bookDeleteAction(book.id)} />
                     </td>
                   </tr>

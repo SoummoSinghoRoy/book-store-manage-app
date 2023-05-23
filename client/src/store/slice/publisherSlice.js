@@ -42,7 +42,6 @@ const publisherSlice = createSlice({
         const publisherIndex = state.publishers.findIndex(publisher => publisher.id === action.payload.updated_publisher.id);
         const updatedPublishers = [...state.publishers];
         updatedPublishers[publisherIndex] = action.payload.updated_publisher;
-    
         return {
           ...state,
           publishers: updatedPublishers,

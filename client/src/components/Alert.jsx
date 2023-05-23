@@ -13,7 +13,7 @@ const AlertComponent = (props) => {
   return(
     showAlert && (
       <div className= {props.alertStyle} role="alert">
-        <strong>{ props.message }</strong>
+        <strong>{ props.message|| props.editMessage }</strong>
         <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={handleDismiss}></button>
       </div>
     )

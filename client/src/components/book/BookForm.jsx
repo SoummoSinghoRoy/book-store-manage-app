@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import { connect } from 'react-redux';
 
-import { bookCreateAction, clearBookStateAction } from '../../store/action/bookAction';
+import { bookCreateAction, bookEditAction, clearBookStateAction } from '../../store/action/bookAction';
 import { fetchAllPublishersAction } from '../../store/action/publisherAction';
 import AlertComponent from '../Alert';
 
@@ -18,6 +18,15 @@ class BookForm extends Component {
 
   componentDidMount = () => {
     this.props.fetchAllPublishersAction()
+    if(this.props.isEditMode) {
+      this.setState({
+        name: this.props.book.name,
+        publish: this.props.book.publish,
+        baseprice: this.props.book.baseprice,
+        publisher: this.props.book.Publisher.id,
+        publishername: this.props.book.Publisher.name
+      })
+    }
   }
 
   changeHandler = (event) => {
@@ -50,6 +59,7 @@ class BookForm extends Component {
 
   selectHandler = (event) => {
     const selectedPublisherId = event.target.value;
+    console.log(selectedPublisherId);
     const selectedPublisher = this.props.publishers.find(publisher => publisher.id === parseInt(selectedPublisherId))
     const selectedPublisherName = selectedPublisher ? selectedPublisher.name : '';
 
@@ -73,6 +83,12 @@ class BookForm extends Component {
         searchWord: '',
         accordionIndex: null
       })
+    }else if(this.props.isEditMode) {
+      this.props.bookEditAction(this.props.bookId, { name, publish, baseprice, publisher })
+      this.setState({
+        searchWord: '',
+        accordionIndex: null
+      })
     }
   }
 
@@ -87,8 +103,8 @@ class BookForm extends Component {
     return (
       <>
         {
-          this.props.message ? 
-          <AlertComponent message = { this.props.message } action = {clearBookStateAction()} alertStyle="alert alert-success alert-dismissible fade show"/> :
+          this.props.message || this.props.editMessage ? 
+          <AlertComponent message = { this.props.message } editMessage = {this.props.editMessage} action = {clearBookStateAction()} alertStyle="alert alert-success alert-dismissible fade show"/> :
           null
         }
         <form method='post' onSubmit={this.submitHandler}>
@@ -227,8 +243,9 @@ const mapStateToProps = (state) => {
     publishers: state.publisher.publishers,
     addError: state.book.addError,
     editError: state.book.editError,
-    message: state.book.message
+    message: state.book.message,
+    editMessage: state.book.editMessage
   }
 }
 
-export default connect(mapStateToProps, { bookCreateAction, clearBookStateAction, fetchAllPublishersAction })(BookForm);
+export default connect(mapStateToProps, { bookCreateAction, bookEditAction, clearBookStateAction, fetchAllPublishersAction })(BookForm);

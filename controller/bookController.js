@@ -60,7 +60,7 @@ exports.bookEditPutController = async (req, res) => {
 
     if(book) {
       const book_publisher = await Publisher.findOne({ where: { id: parseInt(publisher) } })
-      await Book.update({ name, publish, baseprice, publisherId: book_publisher.id }, { where: { id: book.id }, include: [Publisher] })
+      await Book.update({ name, publish, baseprice, PublisherId: book_publisher.id }, { where: { id: book.id }, include: [Publisher] })
       const updated_book = await Book.findOne({ where: { id: bookid }, include: Publisher })
       res.status(200).json({
         Message: "Book updated successfully",

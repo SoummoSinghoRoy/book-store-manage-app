@@ -6,16 +6,14 @@ const bookSlice = createSlice({
     books: [],
     addError: {},
     editError: {},
-    message: ''
+    message: '',
+    editMessage: ''
   },
   reducers: {
     fetch_AllBooks: (state, action) => {
       return {
         ...state,
         books: action.payload.books,
-        addError: {},
-        editError: {},
-        message:''
       }
     },
     add_book: (state, action) => {
@@ -23,8 +21,6 @@ const bookSlice = createSlice({
         return {
           ...state,
           books: [...state.books, action.payload.book],
-          addError: {},
-          editError: {},
           message: action.payload.Message || ''
         };
       }else {
@@ -32,8 +28,6 @@ const bookSlice = createSlice({
           ...state,
           publishers: [...state.books],
           addError: action.payload.errors || {},
-          editError: {},
-          message: ''
         };
       }
     },
@@ -44,17 +38,32 @@ const bookSlice = createSlice({
         message: action.payload.Message || action.payload.Message
       }
     },
+    edit_book: (state, action) => {
+      if(action.payload.updated_book) {
+        const bookIndex = [...state.books].findIndex((book) => book.id === action.payload.updated_book.id)
+        const updatedBook = [...state.books]
+        updatedBook[bookIndex] = action.payload.updated_book
+        return {
+          ...state,
+          books: updatedBook,
+          editMessage: action.payload.Message
+        } 
+      }else {
+        return {
+          ...state,
+          books: [...state.books],
+          editError: action.payload.errors || {}
+        }
+      }
+    },
     clear_bookState: (state) => {
       return {
         ...state,
-        publishers: [...state.books],
-        addError: {},
-        editError: {},
-        message: ''
+        editMessage: ''
       };
     }
   }
 })
 
-export const { add_book, fetch_AllBooks, delete_book, clear_bookState } = bookSlice.actions;
+export const { add_book, fetch_AllBooks, delete_book, edit_book, clear_bookState } = bookSlice.actions;
 export default bookSlice.reducer;
