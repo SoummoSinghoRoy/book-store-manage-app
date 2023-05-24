@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { fetchAllBooksAction, bookDeleteAction } from '../../store/action/bookAction';
 import DeleteComponent from '../DeleteButton';
@@ -13,26 +14,17 @@ const BookTable = () => {
   const getBooks = useSelector(state => state.book.books);
   const books = [...getBooks].reverse();
   const totalPages = useSelector(state => state.book.totalPages);
-  const offset = useSelector(state => state.book.offset)
+  const offset = useSelector(state => state.book.offset);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchAllBooksAction(currentPage))
-  }, [currentPage])
+    navigate(`?page=${currentPage}`);
+  }, [currentPage, dispatch, navigate])
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
-
-  const previousPage = () => {
-    if(currentPage !== 1) {
-      setCurrentPage(currentPage - 1)
-    }
-  }
-  const nextPage = () => {
-    if (currentPage !== totalPages) {
-      setCurrentPage(currentPage + 1)
-    }
-  }
 
   const searchInputHandler = (event) => {
     setSearchWord(event.target.value)
@@ -101,9 +93,7 @@ const BookTable = () => {
         <Pagination 
           currentPage={ currentPage } 
           totalPages = { totalPages } 
-          handlePageChange = { handlePageChange }
-          previousPage={ previousPage }
-          nextPage={ nextPage } 
+          handlePageChange = { handlePageChange } 
         /> : null
       }
     </>
