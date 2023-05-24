@@ -6,10 +6,29 @@ const Book = db.book;
 const Publisher = db.publisher;
 
 exports.bookAllGetController = async (req, res) => {
+  const { page } = req.query;
+  const currentPage = parseInt(page) || 1;
+  const booksPerPage = 2
+
   try {
-    const books = await Book.findAll({ include: Publisher })
-    if(books.length !== 0) {
-      res.status(200).json(books)
+    const offset = (currentPage - 1) * booksPerPage
+    const books = await Book.findAndCountAll(
+      { 
+        include: Publisher,
+        offset,
+        limit: booksPerPage 
+      }
+    )
+    const totalPages = Math.ceil(books.count / booksPerPage)
+
+    if(books.rows.length !== 0) {
+      res.status(200).json({
+        books: books.rows,
+        totalPages,
+        currentPage,
+        booksPerPage,
+        offset
+      })
     } else {
       resourceError(res, "Books not found")
     }

@@ -4,6 +4,10 @@ const bookSlice = createSlice({
   name: 'book',
   initialState: {
     books: [],
+    totalPages: null,
+    currentPage: null,
+    booksPerPage: null,
+    offset: null,
     addError: {},
     editError: {},
     message: '',
@@ -14,6 +18,10 @@ const bookSlice = createSlice({
       return {
         ...state,
         books: action.payload.books,
+        totalPages: action.payload.totalPages,
+        currentPage: action.payload.currentPage,
+        booksPerPage: action.payload.booksPerPage,
+        offset: action.payload.offset
       }
     },
     add_book: (state, action) => {

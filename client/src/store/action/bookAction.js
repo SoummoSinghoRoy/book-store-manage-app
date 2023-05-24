@@ -2,9 +2,13 @@ import axios from 'axios';
 
 import { add_book, fetch_AllBooks, delete_book, edit_book, clear_bookState } from '../slice/bookSlice';
 
-export const fetchAllBooksAction = () => dispatch => {
-  axios.get('http://localhost:9920/api/book').then((res) => {
-    dispatch(fetch_AllBooks({ books: res.data }))
+export const fetchAllBooksAction = (currentpage) => dispatch => {
+  axios.get('http://localhost:9920/api/book/', {
+    params:{
+      page: currentpage
+    }
+  }).then((res) => {
+    dispatch(fetch_AllBooks(res.data))
   }).catch((err) => {
     console.log(err);
   })

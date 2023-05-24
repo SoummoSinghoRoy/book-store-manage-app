@@ -4,15 +4,35 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllBooksAction, bookDeleteAction } from '../../store/action/bookAction';
 import DeleteComponent from '../DeleteButton';
 import EditComponent from '../EditButton';
+import Pagination from '../Pagination';
 
 const BookTable = () => {
-  const [searchWord, setSearchWord] = useState('')
+  const [searchWord, setSearchWord] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
-  const books = useSelector(state => state.book.books)
+  const getBooks = useSelector(state => state.book.books);
+  const books = [...getBooks].reverse();
+  const totalPages = useSelector(state => state.book.totalPages);
+  const offset = useSelector(state => state.book.offset)
 
   useEffect(() => {
-    dispatch(fetchAllBooksAction())
-  }, [])
+    dispatch(fetchAllBooksAction(currentPage))
+  }, [currentPage])
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const previousPage = () => {
+    if(currentPage !== 1) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
+  const nextPage = () => {
+    if (currentPage !== totalPages) {
+      setCurrentPage(currentPage + 1)
+    }
+  }
 
   const searchInputHandler = (event) => {
     setSearchWord(event.target.value)
@@ -23,7 +43,7 @@ const BookTable = () => {
   ) : books;
 
   return(
-    <div>
+    <>
       <table className='table'>
         <thead>
           <tr>
@@ -58,7 +78,7 @@ const BookTable = () => {
               filteredBook.map((book, ind) => {
                 return (
                   <tr key={book.id}>
-                    <td className='text-center'> {ind + 1} </td>
+                    <td className='text-center'> {ind + 1 + offset} </td>
                     <td className='text-center'> { book.name } </td>
                     <td className='text-center'> { book.Publisher.name } </td>
                     <td className='text-center'> { book.baseprice } </td>
@@ -76,7 +96,17 @@ const BookTable = () => {
           }
         </tbody>
       </table>
-    </div>
+      { 
+        books.length !== 0 ?
+        <Pagination 
+          currentPage={ currentPage } 
+          totalPages = { totalPages } 
+          handlePageChange = { handlePageChange }
+          previousPage={ previousPage }
+          nextPage={ nextPage } 
+        /> : null
+      }
+    </>
   )
 }
 
