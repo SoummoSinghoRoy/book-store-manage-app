@@ -22,9 +22,6 @@ const BookTable = () => {
     navigate(`?page=${currentPage}`);
   }, [currentPage, dispatch, navigate])
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
 
   const searchInputHandler = (event) => {
     setSearchWord(event.target.value)
@@ -93,7 +90,7 @@ const BookTable = () => {
         <Pagination 
           currentPage={ currentPage } 
           totalPages = { totalPages } 
-          handlePageChange = { handlePageChange } 
+          setCurrentPage = { setCurrentPage } 
         /> : null
       }
     </>

@@ -185,6 +185,7 @@ class BookForm extends Component {
                     value={this.state.searchWord}
                     onChange={this.searchInputHandler}
                     className='form-control'
+                    placeholder='Search by publisher name'
                   />
                   <div className='overflow-auto' style={{height: "200px"}}>
                     <div className="list-group my-2">

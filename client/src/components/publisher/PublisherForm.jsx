@@ -26,7 +26,7 @@ class PublisherForm extends Component {
   render() {
     return(
       <>
-        <form onSubmit={this.submitHandler} className="my-3">       
+        <form onSubmit={this.submitHandler} className="mt-3">       
           <div className="input-group">
             <span className="input-group-text fw-semibold">Publisher name</span>
             <input 
