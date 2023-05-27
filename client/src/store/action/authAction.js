@@ -1,7 +1,7 @@
 import axios from 'axios';
 import jwtDeCode from 'jwt-decode';
 
-import { signup_user, login_user, clear_authstate } from '../slice/authSlice';
+import { signup_user, login_user, clear_authstate, logout_user } from '../slice/authSlice';
 import sendAuthToken from '../../utils/sendAuthToken';
 
 export const signupUserAction = (user, redirect) => dispatch => { 
@@ -26,6 +26,12 @@ export const loginUserAction = (user, redirect) => dispatch => {
     console.log(err.response.data);
     dispatch(login_user(err.response.data))
   })
+}
+
+export const logoutUserAction = (redirect) => dispatch => {
+  localStorage.removeItem('LoggedIn_user')
+  dispatch(logout_user())
+  redirect('/login')
 }
 
 export const clearAuthStateAction = () => dispatch => {

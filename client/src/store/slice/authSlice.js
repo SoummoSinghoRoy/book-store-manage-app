@@ -10,24 +10,36 @@ const authSlice = createSlice({
   },
   reducers: {
     signup_user: (state, action) => {
-      state.user = action.payload.loggedIn || {};
-      state.error = action.payload.errors ||  {};
-      state.isAuthenticated = false;
+      return{
+        ...state,
+        user: action.payload.loggedIn || {},
+        error: action.payload.errors ||  {},
+        isAuthenticated: false
+      }
     },
     login_user: (state, action) => {
-      state.user = action.payload.loggedIn || {};
-      state.error = action.payload.errors ||  {};
-      state.isAuthenticated = action.payload.loggedIn ? true : false;
-      state.message = action.payload.Message || '';
+      return {
+        user: action.payload.loggedIn || {},
+        error: action.payload.errors || {},
+        isAuthenticated: action.payload.loggedIn ? true : false,
+        message: action.payload.Message || ''
+      }
+    },
+    logout_user: (state, action) => {
+      return {
+        user: {},
+        error: {},
+        isAuthenticated: false,
+        message: ''
+      }
     },
     clear_authstate: (state) => {
-      state.user = {};
-      state.error = {};
-      state.isAuthenticated = false
-      state.message = '';
+      return {
+        ...state
+      }
     }
   }
 })
 
-export const { signup_user, login_user, clear_authstate } = authSlice.actions
+export const { signup_user, login_user, logout_user, clear_authstate } = authSlice.actions
 export default authSlice.reducer;

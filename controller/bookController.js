@@ -8,7 +8,7 @@ const Publisher = db.publisher;
 exports.bookAllGetController = async (req, res) => {
   const { page } = req.query;
   const currentPage = parseInt(page) || 1;
-  const booksPerPage = 2
+  const booksPerPage = 30
 
   try {
     const offset = (currentPage - 1) * booksPerPage
