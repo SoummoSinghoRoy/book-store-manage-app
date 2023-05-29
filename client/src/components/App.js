@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import SignUp from '../pages/auth/SignUp';
 import LogIn from '../pages/auth/LogIn';
@@ -16,6 +16,7 @@ function App() {
       <BrowserRouter>
         <Navbar/>
         <Routes>
+          <Route path='/' element={ <Navigate to='/login'/> }/>
           <Route path='/signup' element={
             <UnProtectedRoute>
               <SignUp/>
