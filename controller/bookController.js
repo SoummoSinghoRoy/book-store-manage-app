@@ -49,15 +49,17 @@ exports.bookAddPostController = async (req, res) => {
   try {
     const publisherid = parseInt(publisher)
     const bookPublisher = await Publisher.findOne({ where: { id: publisherid } })
-    // use eager loading method
+    
     const book = await Book.create(
       { name, publish, baseprice, PublisherId: bookPublisher.id }, 
-      { include: [Publisher] }
     )
+    const bookWithPublisher = await Book.findByPk(book.id, {
+      include: [Publisher],
+    });
 
     res.status(200).json({
       Message: "Book added successfully",
-      book
+      book: bookWithPublisher
     })
   } catch (error) {
     serverError(res, error)

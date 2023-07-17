@@ -11,7 +11,8 @@ const bookSlice = createSlice({
     addError: {},
     editError: {},
     message: '',
-    editMessage: ''
+    editMessage: '',
+    publisher: {}
   },
   reducers: {
     fetch_AllBooks: (state, action) => {
@@ -26,9 +27,11 @@ const bookSlice = createSlice({
     },
     add_book: (state, action) => {
       if(action.payload.book) {
+        console.log(action.payload.book);
         return {
           ...state,
           books: [...state.books, action.payload.book],
+          publisher: action.payload.book.Publisher,
           message: action.payload.Message || ''
         };
       }else {
@@ -67,6 +70,7 @@ const bookSlice = createSlice({
     clear_bookState: (state) => {
       return {
         ...state,
+        message: '',
         editMessage: ''
       };
     }

@@ -29,7 +29,7 @@ const BookTable = () => {
 
   const filteredBook = searchWord ? books.filter(book =>
     book.name.toLowerCase().includes(searchWord.toLowerCase())
-  ) : books;
+  ) : [...books];
 
   return(
     <>

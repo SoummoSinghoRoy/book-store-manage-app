@@ -59,7 +59,6 @@ class BookForm extends Component {
 
   selectHandler = (event) => {
     const selectedPublisherId = event.target.value;
-    console.log(selectedPublisherId);
     const selectedPublisher = this.props.publishers.find(publisher => publisher.id === parseInt(selectedPublisherId))
     const selectedPublisherName = selectedPublisher ? selectedPublisher.name : '';
 
@@ -81,6 +80,7 @@ class BookForm extends Component {
         baseprice: '',
         publisher: '',
         searchWord: '',
+        publishername: '',
         accordionIndex: null
       })
     }else if(this.props.isEditMode) {
