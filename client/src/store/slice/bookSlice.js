@@ -11,8 +11,7 @@ const bookSlice = createSlice({
     addError: {},
     editError: {},
     message: '',
-    editMessage: '',
-    publisher: {}
+    editMessage: ''
   },
   reducers: {
     fetch_AllBooks: (state, action) => {
