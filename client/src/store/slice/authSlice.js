@@ -11,10 +11,10 @@ const authSlice = createSlice({
   reducers: {
     signup_user: (state, action) => {
       return{
-        ...state,
         user: action.payload.loggedIn || {},
         error: action.payload.errors ||  {},
-        isAuthenticated: false
+        isAuthenticated: false,
+        message: action.payload.Message || ''
       }
     },
     login_user: (state, action) => {
@@ -35,7 +35,8 @@ const authSlice = createSlice({
     },
     clear_authstate: (state) => {
       return {
-        ...state
+        ...state,
+        message: ''
       }
     }
   }
